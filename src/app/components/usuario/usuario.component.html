@@ -1,11 +1,12 @@
 
 <div class="contanier">
-    <div class="loginmodal-container">
-      <form>
-        <input type="text" name="nombre_usuario" placeholder="Usuario">
-        <input type="password" name="pass_usuario" placeholder="Contraseña">
   
-        <button type="button" class="btn btn-primary login loginmodal-submit" (click)="loginUser()">Ingresar</button>
+    <div class="loginmodal-container shadow p-2 mb-5">
+      <h1 class="alert alert-primary bg-gradient">Ingreso de Usuario</h1>
+      <form [formGroup]="frmLogin" id="formLogin">
+        <input type="text" name="nusuario" placeholder="Usuario" formControlName="nombre_usuario" id="nusuario"  >
+        <input type="password" name="pusuaro" placeholder="Contraseña"  formControlName="pass_usuario" id="pusuaro"  >
+        <button type="button" class="btn btn-primary" (click)="loginUser()">Ingresar</button>
       </form>
     </div>
   </div>

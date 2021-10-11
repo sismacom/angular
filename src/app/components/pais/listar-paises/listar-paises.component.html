@@ -1,1 +1,37 @@
-<p>listar-paises works!</p>
+<div>
+    <div class="row" style="padding: 10px;">
+        <div class="col-4">
+            <input type="text" id="bnombreRegion" name="bnombreRegion" class="form-control" placeholder="Nombre Pais"
+                style="margin-bottom: 10px;">
+
+        </div>
+        <div class="col-8">
+            <button class="btn btn-primary">Buscar</button>
+            <button class="btn btn-primary" style="margin-left: 10px;" (click)="listartodos()">Listar todos</button>
+        </div>
+
+    </div>
+    <div class="">
+        <table class="table table-hover table-striped table-sm">
+
+            <thead class="table-info">
+                <tr class="text-center">
+                    <th scope="col">N°</th>
+                    <th scope="col">NOMBRE PAIS</th>
+                    <th scope="col">DESCRIPCION</th>
+                    <th scope="col"> EDT </th>
+                </tr>
+            </thead>
+
+            
+            <tbody>
+                <tr *ngFor="let pais of misPaises">
+                    <td class="text-center" scope="row">{{pais.id}}</td>
+                    <td class="text-center">{{pais.nombre}}</td>
+                    <td>{{pais.descripcion}}</td>
+                    <td class="text-center">{{pais.regiones}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

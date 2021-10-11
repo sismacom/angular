@@ -1,17 +1,25 @@
 <header class="text-center bg-light jumbotron">
-  <h2>PANEL DE ADMINISTRACION TURISMO</h2>
+  <div class="container">
+    <h2>PANEL DE ADMINISTRACION TURISMO</h2>
+  </div>
 </header>
 
-<div class="container-fluid contenedorprincipal">
+
+<div class="container contenedorprincipal">
   <div class="row">
     <div class="col-3">
+      <div class="alert alert-info text-center">
+        <h5 class="accordion-header">
+          Usuario: {{nombreusuario}} 
+          <small class="text-muted"><button class="btn btn-outline-warning btn-sm btn-close " tooltip="Salir" (click)="salir()"></button></small>
+        </h5>
+      </div>
       <app-menu></app-menu>
     </div>
     <div class="col-8">
-      <div class="shadow p-3 mb-5 bg-body rounded bg-light">
+      <div class="shadow p-2 mb-5 bg-body rounded bg-light">
         <router-outlet></router-outlet>
       </div>
-
     </div>
   </div>
 </div>
@@ -26,10 +34,12 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>-->
       <div class="modal-body">
-        <p>INGRESADO CON EXITO</p>
+        <div id="mensajeModal" class="alert text-center">
+          <strong>{{respuesta}}</strong>
+        </div>
       </div>
       <div class="modal-footer text-center">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Aceptar</button>
+        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modalshow">Aceptar</button>
       </div>
     </div>
   </div>

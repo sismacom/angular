@@ -3,6 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+
+
+
 import { MenuComponent } from './components/menu/menu.component';
 import { RegionComponent } from './components/region/region.component';
 import { InicioComponent } from './components/inicio/inicio.component';
@@ -10,12 +14,17 @@ import { MainviewComponent } from './components/mainview/mainview.component';
 import { ListarRegionesComponent } from './components/region/listar-regiones/listar-regiones.component';
 import { AgregarRegionesComponent } from './components/region/agregar-regiones/agregar-regiones.component';
 import { PaisComponent } from './components/pais/pais.component';
-import { CiudadComponent } from './components/ciudad/ciudad.component';
-import { AgregarCiudadesComponent } from './components/ciudad/agregar-ciudades/agregar-ciudades.component';
-import { ListarCiudadesComponent } from './components/ciudad/listar-ciudades/listar-ciudades.component';
 import { AgregarPaisesComponent } from './components/pais/agregar-paises/agregar-paises.component';
 import { ListarPaisesComponent } from './components/pais/listar-paises/listar-paises.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
+
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DepartamentoComponent } from './components/departamento/departamento.component';
+import { ListarDepartamentosComponent } from './components/departamento/listar-departamentos/listar-departamentos.component';
+import { AgregarDepartamentosComponent } from './components/departamento/agregar-departamentos/agregar-departamentos.component';
+
 
 
 
@@ -29,17 +38,22 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
     ListarRegionesComponent,
     AgregarRegionesComponent,
     PaisComponent,
-    CiudadComponent,
-    AgregarCiudadesComponent,
-    ListarCiudadesComponent,
     AgregarPaisesComponent,
     ListarPaisesComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    DepartamentoComponent,
+    ListarDepartamentosComponent,
+    AgregarDepartamentosComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
