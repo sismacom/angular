@@ -16,15 +16,11 @@ declare var jQuery: any;
 })
 export class AgregarPaisesComponent implements OnInit {
 
-  @Input() paisEnviado:PaisModel;
+  @Input() paisRecibido:PaisModel;
   
   frmPaisRegistro: FormGroup;
   estadoProceso: Number = -1;
   estadoProcesoEditar: Number = -1;
-
-  
-  
-
 
   validacionCampos = {
     nombre: [{ 'type': 'required', message: 'Digite nombre del Pais' }]
@@ -72,6 +68,12 @@ export class AgregarPaisesComponent implements OnInit {
     }
   }
 
+  actualizar(paisR:any){
+    alert("Me muestro desde agregar paises: "+paisR.nombre);
+    this.frmPaisRegistro.value.nombre=paisR.nombre;
+
+  }
+
   ngOnInit(): void {
     $(document).ready(function () {
       $("#nombrePais").focus();
@@ -87,6 +89,7 @@ export class AgregarPaisesComponent implements OnInit {
       });
     })
 
+    
 
   }
 

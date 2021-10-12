@@ -52,6 +52,7 @@
                                     <div class="btn-group" role="group">
                                         <input type="hidden" name="idpais" value="{{pais.id}}">
                                         <button type="submit" class="btn btn-outline-info" (click)="showUpdate(pais)">
+
                                             <span class="material-icons " style="cursor: pointer; font-size:15px">
                                                 description
                                             </span>
@@ -145,16 +146,18 @@
 <ng-template #modalMensaje let-modal>
     <div class="modal-header">
         <h4 class="modal-title">
-            <span>Aqui va el titulo</span>
+            <span>Modificacion</span>
         </h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <div class="modal-body">
-        <p> <span>Aqui va el cuerpo</span></p>
+    <div class="modal-body text-center"> 
+        <app-agregar-paises #actualizar>
+        </app-agregar-paises>
+        <button class="btn btn-primary btn-sm"(click)="actualizar.actualizar(paisAct)">Verifica</button>
     </div>
-    <div class="modal-footer">
+    <!--<div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-    </div>
+    </div>-->
 </ng-template>

@@ -1,4 +1,4 @@
-import { Component, Directive, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, Directive, ElementRef, HostListener, OnInit, Output, ViewChild } from '@angular/core';
 import { PaisService } from 'src/app/services/pais/pais.service';
 import { PaisModel } from 'src/app/models/pais.model';
 import { Observable } from 'rxjs';
@@ -19,6 +19,7 @@ declare var jQuery: any;
 export class ListarPaisesComponent implements OnInit {
 
   @ViewChild("modalMensaje") modal: ElementRef;
+  @Output() paisAct:PaisModel;
   misPaises: Array<PaisModel> = [];
   pageSize = 5;
   desde = 0;
@@ -75,7 +76,8 @@ export class ListarPaisesComponent implements OnInit {
     });
   }
 
-  showUpdate(id: any) {
+  showUpdate(elpais: any) {
+    this.paisAct=elpais;
     this.modalsv.open(this.modal);
   }
 
