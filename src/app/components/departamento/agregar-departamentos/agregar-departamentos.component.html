@@ -7,7 +7,7 @@
                 <option *ngFor="let region of misRegiones " value="{{region.id}}">{{region.nombre}}</option>
             </select>
             <ng-container *ngIf="regionId==0 ">
-                <div class="alert alert-danger">
+                <div class="alert alert-warning" style="width: 250px;">
                     Debe Seleccionar el una Region...
                 </div>
             </ng-container>

@@ -7,7 +7,7 @@
                 <option *ngFor="let pais of misPaises " value="{{pais.id}}">{{pais.nombre}}</option>
             </select>
             <ng-container *ngIf="paisId==0 ">
-                <div class="alert alert-danger">
+                <div class="alert alert-warning" style="width: 250px;">
                     Debe Seleccionar el Pais...
                 </div>
             </ng-container>
