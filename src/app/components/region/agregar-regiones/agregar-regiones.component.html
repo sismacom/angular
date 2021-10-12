@@ -1,12 +1,18 @@
 <div class="container" style="padding:10px">
-    <div class="formGroup" style="padding-bottom:10px">
-        <label for="pais">Seleccione pais:</label>
-        <select name="pais" id="pais" [(ngModel)]="pais" class="form-select" style="width:250px" aria-label="Default select example">
-            <option *ngFor="let pais of misPaises " value="{{getPais(pais).id}}">{{getPais(pais).nombre}}</option>
-        </select>
-    </div>
+
     <form method="post" [formGroup]="frmRegionRegistro" id="frmDataReg">
-        
+        <div class="formGroup" style="padding-bottom:10px">
+            <select name="pais" id="pais" (change)="paisSelectChange($event)" class="form-select" style="width:250px">
+                <option value="0" selected>Seleccione un pais </option>
+                <option *ngFor="let pais of misPaises " value="{{pais.id}}">{{pais.nombre}}</option>
+            </select>
+            <ng-container *ngIf="paisId==0 ">
+                <div class="alert alert-danger">
+                    Debe Seleccionar el Pais...
+                </div>
+            </ng-container>
+
+        </div>
         <div class="row">
             <div class="col-4">
                 <div class="mb-4">
@@ -17,7 +23,7 @@
 
                     <ng-container *ngFor="let validation of validacionCampos.nombre">
                         <div *ngIf="frmRegionRegistro.controls['nombre'].hasError(validation.type) && (frmRegionRegistro.controls['nombre'].dirty || frmRegionRegistro.controls['nombre'].touched)">
-                            <small class="text-danger">{{validation.message}}</small>
+                            <div class="alert alert-danger">{{validation.message}}</div>
                         </div>
                     </ng-container>
                 </div>
@@ -35,8 +41,7 @@
 
         <div class="text-center">
             <button id="enviar" class="btn btn-primary" (click)="onSubmit()" disabled>Guardar</button>
-            <button type="reset" id="reset" class="btn btn-danger" style="margin-left: 10px" (click)="borrar()"
-                disabled>Cancelar</button>
+            <button type="reset" id="reset" class="btn btn-danger" style="margin-left: 10px" (click)="borrar()">Cancelar</button>
         </div>
     </form>
 </div>

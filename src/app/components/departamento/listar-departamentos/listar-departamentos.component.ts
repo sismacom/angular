@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DepartamentoModel } from 'src/app/models/departamento.model';
+import { DepartamentoService } from 'src/app/services/departamento/departamento.service';
+
+
+declare var $: any;
+declare var jQuery: any;
 
 @Component({
   selector: 'app-listar-departamentos',
@@ -7,7 +15,73 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListarDepartamentosComponent implements OnInit {
 
-  constructor() { }
+  @ViewChild("modalMensaje") modal: ElementRef;
+  misDepartamentos: Array<DepartamentoModel> = [];
+  pageSize = 5;
+  desde = 0;
+  hasta = this.pageSize;
+  searchText;
+
+  constructor(private departamentoService: DepartamentoService, private modalsv: NgbModal) { }
+
+  listartodos() {
+    const result = this.departamentoService.listarDepartamentos();
+    result.then((data: Array<DepartamentoModel>) => {
+      this.misDepartamentos = data;
+    });
+  }
+
+  miDepar: DepartamentoModel;
+
+  buscarPorNombre() {
+    if (this.searchText != "") {
+      const result = this.departamentoService.BuscarRegistroPorNombre(this.searchText);
+      result.then((data: Array<DepartamentoModel>) => {
+        this.misDepartamentos = data;
+        //console.log(this.misPaises);
+      });
+    }else{
+      this.misDepartamentos=[];
+    }
+
+
+    //esto es para 1 resultado
+    /*this.miDepar = null;
+    result.then((data: DepartamentoModel) => {
+      //console.log(data);
+      this.miDepar = data;
+      this.misDepartamentos = new Array<DepartamentoModel>();
+      this.misDepartamentos.push(this.miDepar);
+      console.log(this.misDepartamentos);
+
+    });*/
+
+  }
+
+  getDepartamento(valor): DepartamentoModel {
+    return valor;
+  }
+
+  deletePais(elpais: any) {
+    this.departamentoService.DeleteItemRecord(elpais.id).subscribe(result => {
+      console.log(result);
+      //alert("eliminado");
+      this.listartodos();
+      alert("Registro borrado con exito");
+    });
+  }
+
+  cambiarPagina(evt: PageEvent) {
+    console.log(evt);
+    console.log(evt.pageIndex)
+    console.log(evt.pageSize)
+    this.desde = evt.pageIndex * evt.pageSize;
+    this.hasta = this.desde + evt.pageSize;
+  }
+
+  showUpdate(id: any) {
+    this.modalsv.open(this.modal);
+  }
 
   ngOnInit(): void {
   }

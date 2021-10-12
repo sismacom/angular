@@ -31,10 +31,16 @@ export class PaisService {
     return responce;
   }
 
+  async BuscarRegistroPorNombre(nombre: any) {
+    const responce = await fetch(`${this.URL_BASE}pais/buscarbyname/${nombre}`);
+    return await responce.json();
+  }
+
   async listarPaises() {
     const responce = await fetch(`${this.URL_BASE}pais/listartodos`);
     return await responce.json();
   }
+  
 
   listarPaises2() {
     const responce = fetch(`${this.URL_BASE}pais/listartodos`);

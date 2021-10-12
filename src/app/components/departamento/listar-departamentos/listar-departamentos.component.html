@@ -1,1 +1,91 @@
-<p>listar-departamentos works!</p>
+<div>
+    <div class="row" style="padding: 10px;">
+        <div class="col-3">
+            <button class="btn btn-primary btn-block" style="margin-left: 10px;" (click)="listartodos()">Listar
+                todos</button>
+        </div>
+        <div class="col-8 d-flex align-items-center">
+            <div class="input-group mb-3 ">
+                
+                <input type="text" [(ngModel)]="searchText" class="form-control" id="buscardep" mdbInput 
+                placeholder="Nombre del Departameto"  (keyup.enter)="buscarPorNombre()"/>
+                <button class="btn btn-outline-primary" type="button" id="bntbuscar" (click)="buscarPorNombre()" >Buscar</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <table mdbTable id="dataTable" class="table table-hover  ">
+
+            <thead class="table-info">
+                <tr class="text-center">
+                    <th scope="col">N°</th>
+                    <th scope="col">NOMBRE DEPARTAMENTO</th>
+                    <th scope="col">REGION</th>
+                    <th scope="col">DESCRIPCION</th>
+                    <th scope="col">OPT</th>
+                </tr>
+            </thead>
+
+            <tbody class="buscar">
+                <ng-container *ngIf="misDepartamentos.length > 0">
+                    <tr *ngFor="let departamento of (misDepartamentos | slice:desde:hasta) ">
+                        <td class="text-center" scope="row" width="40px">
+                            <ng-container *ngIf="departamento.id!=null">
+                                {{getDepartamento(departamento).id}}
+                            </ng-container>
+                        </td>
+                        <td class="text-center">
+                            <ng-container *ngIf="departamento.nombre!=null">
+                                {{departamento.nombre}}
+                            </ng-container>
+                        </td>
+                        <td class="text-center">
+                            <ng-container *ngIf="departamento.region!=null">
+                                {{departamento.region.nombre}}
+                            </ng-container>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="departamento.descripcion!=null">
+                                {{departamento.descripcion}}
+                            </ng-container>
+
+                        </td>
+                        <td class="text-center" width="80px">
+                            <form id="frmDataPais" method="POST" action="#">
+                                <div class="btn-group" role="group">
+                                    <input type="hidden" name="iddepartamento"
+                                        value="{{departamento.id}}">
+                                    <button type="submit" class="btn btn-outline-info"
+                                        (click)="showUpdate(departamento)">
+                                        <span class="material-icons " style="cursor: pointer; font-size:15px">
+                                            description
+                                        </span>
+                                    </button>
+                                    <button type="submit" class="btn btn-outline-warning btn-sm"
+                                        (click)="deletePais(departamento)">
+                                        <span class="material-icons md-18" style="cursor: pointer;margin-left: 5px;">
+                                            delete_forever
+                                        </span>
+                                    </button>
+                                </div>
+                            </form>
+                        </td>
+
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="misDepartamentos.length === 0">
+                    <tr>
+                        <td colspan="4">
+                            <div class="alert">
+                                <strong>NO HAY RESULTADOS</strong>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+        <mat-paginator [length]="misDepartamentos.length" [pageSize]="pageSize" (page)="cambiarPagina($event)"
+            [pageSizeOptions]="[5, 10]" [showFirstLastButtons]="true">
+        </mat-paginator>
+    </div>
+</div>

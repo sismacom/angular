@@ -8,8 +8,10 @@
             <div class="input-group mb-3 ">
                 <!--<input type="text" class="form-control" id="bnombreRegion" name="bnombreRegion"
                     placeholder="Nombre Pais"  disabled>-->
-                <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInput />
-                <!--<button class="btn btn-outline-primary" type="button" id="bntbuscar" disabled>Buscar</button>-->
+                <input type="text" [(ngModel)]="searchText" class="form-control" id="buscarpais" mdbInput
+                    (keyup.enter)="buscarPorNombre()" placeholder="Nombre del pais" />
+                <button class="btn btn-outline-primary" type="button" id="bntbuscar"
+                    (click)="buscarPorNombre()">Buscar</button>
             </div>
         </div>
     </div>
@@ -26,36 +28,56 @@
             </thead>
 
             <tbody class="buscar">
+                <ng-container *ngIf="misPaises.length > 0">
+                    <tr *ngFor="let pais of (misPaises | slice:desde:hasta) ">
+                        <ng-container *ngIf="pais!=null">
+                            <td class="text-center" scope="row" width="40px">
+                                <ng-container *ngIf="pais.id!=null">
+                                    {{pais.id}}
+                                </ng-container>
+                            </td>
+                            <td class="text-center">
+                                <ng-container *ngIf="pais.nombre!=null">
+                                    {{pais.nombre}}
+                                </ng-container>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="pais.descripcion!=null">
+                                    {{pais.descripcion}}
+                                </ng-container>
 
-                <tr *ngFor="let pais of (misPaises | slice:desde:hasta) ">
-                    <td class="text-center" scope="row" width="40px">
-                        {{getPais(pais).id}}
-                    </td>
-                    <td class="text-center">
-                        {{getPais(pais).nombre}}
-                    </td>
-                    <td>
-                        {{getPais(pais).descripcion}}
-                    </td>
-                    <td class="text-center" width="80px">
-                        <form id="frmDataPais" method="POST" action="#">
-                            <div class="btn-group" role="group">
-                                <input type="hidden" name="idpais" value="{{getPais(pais).id}}">
-                                <button type="submit" class="btn btn-outline-info"  (click)="showUpdate(pais)">
-                                    <span class="material-icons " style="cursor: pointer; font-size:15px">
-                                        description
-                                    </span>
-                                </button>
-                                <button type="submit" class="btn btn-outline-warning btn-sm" (click)="deletePais(pais)">
-                                    <span class="material-icons md-18" style="cursor: pointer;margin-left: 5px;">
-                                        delete_forever
-                                    </span>
-                                </button>
+                            </td>
+                            <td class="text-center" width="80px">
+                                <form id="frmDataPais" method="POST" action="#">
+                                    <div class="btn-group" role="group">
+                                        <input type="hidden" name="idpais" value="{{pais.id}}">
+                                        <button type="submit" class="btn btn-outline-info" (click)="showUpdate(pais)">
+                                            <span class="material-icons " style="cursor: pointer; font-size:15px">
+                                                description
+                                            </span>
+                                        </button>
+                                        <button type="submit" class="btn btn-outline-warning btn-sm"
+                                            (click)="deletePais(pais)">
+                                            <span class="material-icons md-18"
+                                                style="cursor: pointer;margin-left: 5px;">
+                                                delete_forever
+                                            </span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="misPaises.length === 0">
+                    <tr>
+                        <td colspan="4">
+                            <div class="alert">
+                                <strong>NO HAY RESULTADOS</strong>
                             </div>
-                        </form>
-                    </td>
-
-                </tr>
+                        </td>
+                    </tr>
+                </ng-container>
             </tbody>
         </table>
         <mat-paginator [length]="misPaises.length" [pageSize]="pageSize" (page)="cambiarPagina($event)"
@@ -127,7 +149,7 @@
         </h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
-          </button>
+        </button>
     </div>
     <div class="modal-body">
         <p> <span>Aqui va el cuerpo</span></p>
@@ -135,4 +157,4 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
     </div>
-</ng-template>   
+</ng-template>

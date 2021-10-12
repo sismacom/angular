@@ -1,27 +1,121 @@
+<div>
+    <div class="row" style="padding: 10px;">
+        <div class="col-3">
+            <button class="btn btn-primary btn-block" style="margin-left: 10px;" (click)="listartodos()">Listar
+                todos</button>
+        </div>
+        <div class="col-8 d-flex align-items-center">
+            <div class="input-group mb-3 ">
+                <!--<input type="text" class="form-control" id="bnombreRegion" name="bnombreRegion"
+                  placeholder="Nombre Pais"  disabled>-->
+                <input type="text" [(ngModel)]="searchText" class="form-control" id="buscarregion" mdbInput
+                    (keyup.enter)="buscarPorNombre()" />
+                <button class="btn btn-outline-primary" type="button" id="bntbuscar"
+                    (click)="buscarPorNombre()">Buscar</button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <table mdbTable id="dataTable" class="table table-hover  ">
+
+            <thead class="table-info">
+                <tr class="text-center">
+                    <th scope="col">N°</th>
+                    <th scope="col">NOMBRE REGION</th>
+                    <th scope="col">PAIS</th>
+                    <th scope="col">DESCRIPCION</th>
+                    <th scope="col">OPT</th>
+                </tr>
+            </thead>
+
+            <tbody class="buscar">
+                <ng-container *ngIf="misRegiones.length > 0">
+                    <tr *ngFor="let region of (misRegiones | slice:desde:hasta) ">
+                        <ng-container *ngIf="region!=null">
+                            <td class="text-center" scope="row" width="40px">
+                                <ng-container *ngIf="region.id!=null">
+                                    {{region.id}}
+                                </ng-container>
+                            </td>
+                            <td class="text-center">
+                                <ng-container *ngIf="region.nombre!=null">
+                                    {{region.nombre}}
+                                </ng-container>
+
+                            </td>
+                            <td class="text-center">
+                                <ng-container *ngIf="region.pais!=null">
+                                    {{region.pais.nombre}}
+                                </ng-container>
+                            </td>
+                            <td>
+                                <ng-container *ngIf="region.descripcion!=null">
+                                    {{region.descripcion}}
+                                </ng-container>
+                            </td>
+                            <td class="text-center" width="80px">
+                                <form id="frmDataPais" method="POST" action="#">
+                                    <div class="btn-group" role="group">
+                                        <input type="hidden" name="idregion" value="{{region.id}}">
+                                        <button type="submit" class="btn btn-outline-info" (click)="showUpdate(region)">
+                                            <span class="material-icons " style="cursor: pointer; font-size:15px">
+                                                description
+                                            </span>
+                                        </button>
+                                        <button type="submit" class="btn btn-outline-warning btn-sm"
+                                            (click)="deletePais(region)">
+                                            <span class="material-icons md-18"
+                                                style="cursor: pointer;margin-left: 5px;">
+                                                delete_forever
+                                            </span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </td>
+                        </ng-container>
+
+                    </tr>
+                </ng-container>
+                <ng-container *ngIf="misRegiones.length === 0">
+                    <tr>
+                        <td colspan="4">
+                            <div class="alert">
+                                <strong>NO HAY RESULTADOS</strong>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+        <mat-paginator [length]="misRegiones.length" [pageSize]="pageSize" (page)="cambiarPagina($event)"
+            [pageSizeOptions]="[5, 10]" [showFirstLastButtons]="true">
+        </mat-paginator>
+    </div>
+</div>
+
+
+<!--
 <table mat-table  class="mat-elevation-z8">
 
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-  
-    <!-- Position Column -->
+   
     <ng-container matColumnDef="position">
       <th mat-header-cell *matHeaderCellDef> No. </th>
       <td mat-cell *matCellDef="let element"> elemento 1</td>
     </ng-container>
   
-    <!-- Name Column -->
+    
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
       <td mat-cell *matCellDef="let element"> elemento 1 </td>
     </ng-container>
   
-    <!-- Weight Column -->
+    
     <ng-container matColumnDef="weight">
       <th mat-header-cell *matHeaderCellDef> Weight </th>
       <td mat-cell *matCellDef="let element"> elemento 1 </td>
     </ng-container>
   
-    <!-- Symbol Column -->
+    
     <ng-container matColumnDef="symbol">
       <th mat-header-cell *matHeaderCellDef> Symbol </th>
       <td mat-cell *matCellDef="let element"> elemento 1 </td>
@@ -30,3 +124,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
+-->

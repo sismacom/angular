@@ -23,19 +23,17 @@ export class RegionService {
     return this.http.delete(`${this.URL_BASE}region/eliminar/${id}`);
   }
 
-  BuscarRegistro(id: any) {
+  BuscarRegionById(id: any) {
     const responce = fetch(`${this.URL_BASE}region/buscarbyid/${id}`);
     return responce;
   }
 
-
-  /*async BuscarRegistro(id: any) {
-    const responce = await fetch(`${this.URL_BASE}region/buscarbyid/${id}`);
+  async BuscarRegionPorNombre(nombre: any) {
+    const responce = await fetch(`${this.URL_BASE}region/buscarbyname/${nombre}`);
     return await responce.json();
-  }*/
+  }
 
-
-  async listarPaises() {
+  async listarRegiones() {
     const responce = await fetch(`${this.URL_BASE}region/listartodos`);
     return await responce.json();
   }

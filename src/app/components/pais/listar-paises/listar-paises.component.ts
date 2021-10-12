@@ -19,7 +19,7 @@ declare var jQuery: any;
 export class ListarPaisesComponent implements OnInit {
 
   @ViewChild("modalMensaje") modal: ElementRef;
-  misPaises: any = [];
+  misPaises: Array<PaisModel> = [];
   pageSize = 5;
   desde = 0;
   hasta = this.pageSize;
@@ -27,26 +27,35 @@ export class ListarPaisesComponent implements OnInit {
 
   constructor(private paisService: PaisService, private router: Router, private modalsv: NgbModal) { }
 
-  @HostListener('input') oninput() {
-    this.searchItems();
-  }
-  searchItems() {
-
-  }
-
-  getPais(valor): PaisModel {
-    return valor;
-  }
-
 
   listartodos() {
     const result = this.paisService.listarPaises();
-    result.then(data => {
+    result.then((data: Array<PaisModel>) => {
       this.misPaises = data;
-      $("#bnombreRegion").removeAttr("disabled");
-      $("#bntbuscar").removeAttr("disabled");
+      //console.log(this.misPaises);
     });
-    //$("#tabladatos").DataTable();
+  }
+
+
+  mipais: PaisModel;
+  buscarPorNombre() {
+    const result = this.paisService.BuscarRegistroPorNombre(this.searchText);
+    result.then((data: Array<PaisModel>) => {
+      this.misPaises = data;
+      //console.log(this.misPaises);
+    });
+
+    //esto es para 1 resultado
+    /*this.mipais = null;
+    result.then((data: PaisModel) => {
+      //console.log(data);
+      this.mipais = data;
+      this.misPaises = new Array<PaisModel>();
+      this.misPaises.push(this.mipais);
+      console.log(this.misPaises);
+
+    });*/
+
   }
 
   cambiarPagina(evt: PageEvent) {
@@ -68,10 +77,6 @@ export class ListarPaisesComponent implements OnInit {
 
   showUpdate(id: any) {
     this.modalsv.open(this.modal);
-  }
-
-  applyFilter(evt) {
-
   }
 
   ngOnInit(): void {

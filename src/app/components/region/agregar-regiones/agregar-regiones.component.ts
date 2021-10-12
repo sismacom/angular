@@ -20,71 +20,78 @@ export class AgregarRegionesComponent implements OnInit {
 
 
   frmRegionRegistro: FormGroup;
-  pais=0;
+  paisId: number=0;
   validacionCampos = {
-    nombre: [{ 'type': 'required', message: 'Digite nombre de la Region' }]
+    nombre: [{ 'type': 'required', message: 'Digite nombre de la Region' }],
+    pais: [{ 'type': 'required', message: 'Digite nombre de la Region' }]
   }
 
 
 
-  misPaises: any = [];
+  misPaises: Array<PaisModel> = [];
 
   constructor(private contructorFormulario: FormBuilder, private regionService: RegionService, private paisService: PaisService, private activatedRoute: ActivatedRoute) {
     this.frmRegionRegistro = this.contructorFormulario.group({
       nombre: new FormControl('', Validators.compose([Validators.required])),
-      descripcion: new FormControl(),
-      //pais:new FormControl()
+      descripcion: new FormControl()
     });
 
   }
 
   onSubmit() {
     let jQueryInstance = this
-    alert(this.pais);
-    if (this.frmRegionRegistro.valid) {
-      //this.frmRegionRegistro.value.pais=this.pais;
-      this.regionService.InsertRecord(this.frmRegionRegistro.value,this.pais).subscribe(result => {
-        //console.log(result);
-        //console.log(result.id);
 
-        if (result.id > 0) {
-          alert("Guardado con exito");
-          this.borrar();
-        } else {
-          //this.estadoProceso = 0;
-          //this.modal.callAlert("Error al registrar", "ERROR");
-        }
+    if (this.paisId != 0) {
+      //alert(this.paisId);
+      if (this.frmRegionRegistro.valid) {
+        //this.frmRegionRegistro.value.pais=this.pais;
+        this.regionService.InsertRecord(this.frmRegionRegistro.value, this.paisId).subscribe(result => {
+          //console.log(result);
+          //console.log(result.id);
 
-      });
-    } else {
-      Object.keys(this.frmRegionRegistro.controls).forEach(field => {
-        const control: any = this.frmRegionRegistro.get(field);
-        if (!control['controls']) {
-          control.markAsTouched({ onlySelf: true });
-        }
-      })
+          if (result.id > 0) {
+            alert("Guardado con exito");
+            this.borrar();
+          } else {
+            alert("Error Al guardar");
+            //this.estadoProceso = 0;
+            //this.modal.callAlert("Error al registrar", "ERROR");
+
+          }
+
+        });
+      } else {
+        Object.keys(this.frmRegionRegistro.controls).forEach(field => {
+          const control: any = this.frmRegionRegistro.get(field);
+          if (!control['controls']) {
+            control.markAsTouched({ onlySelf: true });
+          }
+        })
+      }
+    }else{
+      alert("Debe seleccionar el pais");
     }
-  }
 
-  getPais(valor): PaisModel {
-    return valor;
+
   }
 
   borrar() {
     this.frmRegionRegistro.reset();
     $("#enviar").attr("disabled", "disabled");
-    $("#reset").attr("disabled", "disabled");
   }
 
   cargarPaises() {
     const result = this.paisService.listarPaises();
     console.log(result);
-    result.then(data => {
+    result.then((data: Array<PaisModel>) => {
       this.misPaises = data;
     });
 
   }
 
+  paisSelectChange(event: any) {
+    this.paisId = event.target.value;
+  }
   ngOnInit(): void {
 
     this.cargarPaises();

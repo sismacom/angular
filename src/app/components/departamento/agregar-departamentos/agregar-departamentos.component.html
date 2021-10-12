@@ -1,1 +1,44 @@
-<p>agregar-departamentos works!</p>
+<div class="container" style="padding:10px">
+    
+    <form method="post" [formGroup]="frmDepartamentoRegistro" id="frmDataReg">
+        <div class="formGroup" style="padding-bottom:10px">
+            <select name="region" id="region" (change)="paisSelectChange($event)" class="form-select" style="width:250px" >
+                <option value="0" selected>Seleccione una región</option>
+                <option *ngFor="let region of misRegiones " value="{{region.id}}">{{region.nombre}}</option>
+            </select>
+            <ng-container *ngIf="regionId==0 ">
+                <div class="alert alert-danger">
+                    Debe Seleccionar el una Region...
+                </div>
+            </ng-container>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="mb-4">
+                    <label for="nombreDepartamento" class="form-label">Nombre de Departamento</label>
+
+                    <input type="text" formControlName="nombre" class="form-control " id="nombreDepartamento"
+                        name="nombreDepartamento" aria-describedby="pais" required>
+
+                    <ng-container *ngFor="let validation of validacionCampos.nombre">
+                        <div *ngIf="frmDepartamentoRegistro.controls['nombre'].hasError(validation.type) && (frmDepartamentoRegistro.controls['nombre'].dirty || frmDepartamentoRegistro.controls['nombre'].touched)">
+                            <small class="text-danger">{{validation.message}}</small>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripcion</label>
+                    <textarea name="descripcion" formControlName="descripcion" rows="5" class="form-control"
+                        id="descripcion"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button id="enviar" class="btn btn-primary" (click)="onSubmit()" disabled>Guardar</button>
+            <button type="reset" id="reset" class="btn btn-danger" style="margin-left: 10px" (click)="borrar()">Cancelar</button>
+        </div>
+    </form>
+</div>
