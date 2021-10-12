@@ -13,7 +13,7 @@ import { AutenticacionService } from 'src/app/services/usuario/autenticacion.ser
 export class UsuarioComponent implements OnInit {
 
   frmLogin: FormGroup;
-  usuario:Usuario
+  usuario:Usuario;
   
   validarCampos = {
     nonombreUsuario: [
@@ -34,7 +34,7 @@ export class UsuarioComponent implements OnInit {
     })*/
   }
 
-  invalidLogin = false
+  invalidLogin = false;
 
 
 
@@ -43,7 +43,7 @@ export class UsuarioComponent implements OnInit {
 
     if (this.loginService.autenticar(this.usuario) ){
       this.routerrut.navigate(["mainView"]);
-      this.invalidLogin = false
+      this.invalidLogin = false;
     } else {
       alert("Nombre de usuario y contraseña incorrestos!!!")
       this.invalidLogin = true

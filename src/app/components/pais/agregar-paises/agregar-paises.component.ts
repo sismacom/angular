@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PaisService } from 'src/app/services/pais/pais.service';
-import { Router } from '@angular/router';
+import { PaisModel } from 'src/app/models/pais.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 
@@ -15,9 +16,13 @@ declare var jQuery: any;
 })
 export class AgregarPaisesComponent implements OnInit {
 
+  @Input() paisEnviado:PaisModel;
+  
   frmPaisRegistro: FormGroup;
   estadoProceso: Number = -1;
   estadoProcesoEditar: Number = -1;
+
+  
   
 
 
@@ -25,11 +30,13 @@ export class AgregarPaisesComponent implements OnInit {
     nombre: [{ 'type': 'required', message: 'Digite nombre del Pais' }]
   }
 
-  constructor(private contructorFormulario: FormBuilder, private paisService: PaisService,private router:Router) {
+  constructor(private contructorFormulario: FormBuilder, 
+    private paisService: PaisService,private router:Router,private activatedRoute: ActivatedRoute) {
     this.frmPaisRegistro = this.contructorFormulario.group({
       nombre: new FormControl('', Validators.compose([Validators.required])),
       descripcion: new FormControl()
     });
+    
   }
 
   borrar() {

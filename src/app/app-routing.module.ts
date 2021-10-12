@@ -23,31 +23,36 @@ const routes: Routes = [
         children: [
           { path: 'nuevaregion', component: AgregarRegionesComponent },
           { path: 'buscarregion', component: ListarRegionesComponent },
-          {path:'**',pathMatch:'full',redirectTo:'manejoregiones'}
+          { path: '**', pathMatch: 'full', redirectTo: 'manejoregiones' }
         ]
       },
       {
         path: 'manejopaises', component: PaisComponent,
         children: [
           { path: 'nuevopais', component: AgregarPaisesComponent },
-          { path: 'buscarpais', component: ListarPaisesComponent },
-          {path:'**',pathMatch:'full',redirectTo:'manejopaises'}
+
+          {
+            path: 'buscarpais', component: ListarPaisesComponent, children: [
+              { path: 'nuevopais/:pais', component: AgregarPaisesComponent }
+            ]
+          },
+          { path: '**', pathMatch: 'full', redirectTo: 'manejopaises' }
 
         ]
       },
       {
-        path: 'manejodepartamentos', component:DepartamentoComponent,
+        path: 'manejodepartamentos', component: DepartamentoComponent,
         children: [
-          { path: 'nuevodepartamento', component:AgregarDepartamentosComponent},
-          { path: 'buscardepartamento', component: ListarDepartamentosComponent},
-          {path:'**',pathMatch:'full',redirectTo:'manejodepartamentos'}
+          { path: 'nuevodepartamento', component: AgregarDepartamentosComponent },
+          { path: 'buscardepartamento', component: ListarDepartamentosComponent },
+          { path: '**', pathMatch: 'full', redirectTo: 'manejodepartamentos' }
 
         ]
       }
     ]
   },
-  { path:'salir',component:InicioComponent},
-  {path:'**',pathMatch:'full',redirectTo:'mainView'}
+  { path: 'salir', component: InicioComponent },
+  { path: '**', pathMatch: 'full', redirectTo: 'mainView' }
 
 ];
 

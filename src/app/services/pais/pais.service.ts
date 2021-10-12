@@ -31,6 +31,15 @@ export class PaisService {
     return responce;
   }
 
+  async listarPaises() {
+    const responce = await fetch(`${this.URL_BASE}pais/listartodos`);
+    return await responce.json();
+  }
+
+  listarPaises2() {
+    const responce = fetch(`${this.URL_BASE}pais/listartodos`);
+    return responce;
+  }
 
   /*async BuscarRegistro(id: any) {
     const responce = await fetch(`${this.URL_BASE}pais/buscarbyid/${id}`);
@@ -38,10 +47,10 @@ export class PaisService {
   }*/
 
 
-  async listarPaises() {
+  /*async listarPaises() {
     const responce = await fetch(`${this.URL_BASE}pais/listartodos`);
     return await responce.json();
-  }
+  }*/
 
 
 }

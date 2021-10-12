@@ -1,17 +1,42 @@
 <div class="container" style="padding:10px">
-    <form >
-        <div class="mb-3">
-            <label for="nombreRegion" class="form-label">Nombre de Region</label>
-            <input type="text" class="form-control " id="nombreRegion" name="nombreRegion"
-                aria-describedby="region" required>
+    <div class="formGroup" style="padding-bottom:10px">
+        <label for="pais">Seleccione pais:</label>
+        <select name="pais" id="pais" [(ngModel)]="pais" class="form-select" style="width:250px" aria-label="Default select example">
+            <option *ngFor="let pais of misPaises " value="{{getPais(pais).id}}">{{getPais(pais).nombre}}</option>
+        </select>
+    </div>
+    <form method="post" [formGroup]="frmRegionRegistro" id="frmDataReg">
+        
+        <div class="row">
+            <div class="col-4">
+                <div class="mb-4">
+                    <label for="nombreRegion" class="form-label">Nombre de Region</label>
+
+                    <input type="text" formControlName="nombre" class="form-control " id="nombreRegion"
+                        name="nombreRegion" aria-describedby="pais" required>
+
+                    <ng-container *ngFor="let validation of validacionCampos.nombre">
+                        <div *ngIf="frmRegionRegistro.controls['nombre'].hasError(validation.type) && (frmRegionRegistro.controls['nombre'].dirty || frmRegionRegistro.controls['nombre'].touched)">
+                            <small class="text-danger">{{validation.message}}</small>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripcion</label>
+                    <textarea name="descripcion" formControlName="descripcion" rows="5" class="form-control"
+                        id="descripcion"></textarea>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="descripcion" class="form-label">Descripcion</label>
-            <textarea name="descripcion" class="form-control" id="" required></textarea>
-        </div>
+
+
+
         <div class="text-center">
-            <button type="submit" class="btn btn-success">Guardar</button>
-            <button type="submit" class="btn btn-danger" style="margin-left: 10px">Cancelar</button>
+            <button id="enviar" class="btn btn-primary" (click)="onSubmit()" disabled>Guardar</button>
+            <button type="reset" id="reset" class="btn btn-danger" style="margin-left: 10px" (click)="borrar()"
+                disabled>Cancelar</button>
         </div>
     </form>
 </div>
