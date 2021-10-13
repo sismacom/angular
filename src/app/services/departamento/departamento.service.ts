@@ -13,12 +13,12 @@ export class DepartamentoService {
 
     constructor(private http: HttpClient) { }
   
-    InsertRecord(data: any, id: any): Observable<any> {
+    InsertNewRecord(data: any, id: any): Observable<any> {
       return this.http.post(`${this.URL_BASE}departamento/nuevo/${id}`, data);
     }
   
-    UpdateRecord(data: any, id: any): Observable<any> {
-      return this.http.put(`${this.URL_BASE}departamento/actualizar/${id}`, data);
+    UpdateRecord(data: any): Observable<any> {
+      return this.http.put(`${this.URL_BASE}departamento/actualizar`, data);
     }
   
     DeleteItemRecord(id: any): Observable<any> {

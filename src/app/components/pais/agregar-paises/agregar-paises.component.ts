@@ -16,8 +16,8 @@ declare var jQuery: any;
 })
 export class AgregarPaisesComponent implements OnInit {
 
-  @Input() paisRecibido:PaisModel;
-  
+  @Input() paisRecibido: PaisModel;
+
   frmPaisRegistro: FormGroup;
   estadoProceso: Number = -1;
   estadoProcesoEditar: Number = -1;
@@ -26,19 +26,18 @@ export class AgregarPaisesComponent implements OnInit {
     nombre: [{ 'type': 'required', message: 'Digite nombre del Pais' }]
   }
 
-  constructor(private contructorFormulario: FormBuilder, 
-    private paisService: PaisService,private router:Router,private activatedRoute: ActivatedRoute) {
+  constructor(private contructorFormulario: FormBuilder,
+    private paisService: PaisService, private router: Router, private activatedRoute: ActivatedRoute) {
     this.frmPaisRegistro = this.contructorFormulario.group({
       nombre: new FormControl('', Validators.compose([Validators.required])),
       descripcion: new FormControl()
     });
-    
+
   }
 
   borrar() {
     this.frmPaisRegistro.reset();
     $("#enviar").attr("disabled", "disabled");
-    $("#reset").attr("disabled", "disabled");
   }
 
   onSubmit() {
@@ -68,9 +67,30 @@ export class AgregarPaisesComponent implements OnInit {
     }
   }
 
-  actualizar(paisR:any){
-    alert("Me muestro desde agregar paises: "+paisR.nombre);
-    this.frmPaisRegistro.value.nombre=paisR.nombre;
+  actualizar() {
+    //alert(this.frmPaisRegistro.controls['nombre'].value)
+    const name = this.frmPaisRegistro.controls['nombre'].value;
+    if (name != "") {
+      this.paisRecibido.nombre = name;
+      this.paisRecibido.descripcion = this.frmPaisRegistro.controls['descripcion'].value;
+      this.paisService.UpdateRecord(this.paisRecibido).subscribe(result => {
+        //console.log(result);
+        //console.log(result.id);
+
+        if (result.id > 0) {
+          this.estadoProceso = 1;
+          alert("Guardado con exito");
+          this.borrar();
+        } else {
+          alert("Error al Actualizar");
+          //this.estadoProceso = 0;
+          //this.modal.callAlert("Error al registrar", "ERROR");
+        }
+
+      });
+    }else{
+      alert("Error campo nombre vacio");
+    }
 
   }
 
@@ -80,17 +100,19 @@ export class AgregarPaisesComponent implements OnInit {
       $("#nombrePais").keyup(function (evt) {
         if ($(this).val().length > 0) {
           $("#enviar").removeAttr("disabled",);
-          $("#reset").removeAttr("disabled",);
         } else {
           $("#enviar").attr("disabled", "disabled");
-          $("#reset").attr("disabled", "disabled");
         }
 
       });
     })
 
-    
-
+    if (this.paisRecibido != null) {
+      this.frmPaisRegistro.controls['nombre'].patchValue(this.paisRecibido.nombre)
+      this.frmPaisRegistro.controls['descripcion'].patchValue(this.paisRecibido.descripcion);
+      $("#enviar").hide();
+      $("#reset").hide();
+    }
   }
 
 }

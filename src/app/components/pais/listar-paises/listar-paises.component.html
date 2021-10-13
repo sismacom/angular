@@ -87,77 +87,23 @@
     </div>
 </div>
 
-<!--
-    <table id="tabladatos" class="table table-hover  ">
-
-            <thead class="table-info">
-                <tr class="text-center">
-                    <th scope="col">N°</th>
-                    <th scope="col">NOMBRE PAIS</th>
-                    <th scope="col">DESCRIPCION</th>
-                    <th scope="col">OPT</th>
-                </tr>
-            </thead>
-
-            <tbody class="buscar">
-
-                <tr *ngFor="let pais of (misPaises | slice:desde:hasta) " class="accordion-toggle"
-                    data-toggle="collapse">
-                    <td class="text-center" scope="row" width="40px">
-                        {{getPais(pais).id}}
-                    </td>
-                    <td class="">
-                        {{getPais(pais).nombre}}
-                    </td>
-                    <td>
-                        {{getPais(pais).descripcion}}
-                    </td>
-                    <td class="text-center" width="80px">
-                        <form id="frmDataPais" method="POST" action="#">
-                            <div class="btn-group" role="group">
-                                <input type="hidden" name="idpais" value="{{getPais(pais).id}}">
-                                <button type="submit" class="btn btn-outline-info"   (click)="showUpdate(pais)">
-                                    <span class="material-icons " style="cursor: pointer; font-size:15px">
-                                        description
-                                    </span>
-                                </button>
-                                <button type="submit" class="btn btn-outline-warning btn-sm" (click)="deletePais(pais)">
-                                    <span class="material-icons md-18" style="cursor: pointer;margin-left: 5px;">
-                                        delete_forever
-                                    </span>
-                                </button>
-                            </div>
-                        </form>
-                    </td>
-
-                </tr>
-            </tbody>
-        </table>
-        <mat-paginator [length]="misPaises.length" [pageSize]="pageSize" (page)="cambiarPagina($event)"
-            [pageSizeOptions]="[5, 10]" [showFirstLastButtons]="true">
-        </mat-paginator>
-    </div>
--->
-
-
-
-
 
 <ng-template #modalMensaje let-modal>
     <div class="modal-header">
         <h4 class="modal-title">
             <span>Modificacion</span>
         </h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <!--<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
-        </button>
+        </button>-->
     </div>
     <div class="modal-body text-center"> 
-        <app-agregar-paises #actualizar>
-        </app-agregar-paises>
-        <button class="btn btn-primary btn-sm"(click)="actualizar.actualizar(paisAct)">Verifica</button>
+        <app-agregar-paises #actualizar [paisRecibido]="paisAct"></app-agregar-paises>
+        
+
     </div>
-    <!--<div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
-    </div>-->
+    <div class="modal-footer">
+        <button class="btn btn-success btn-sm" (click)="actualizar.actualizar();modal.close('Save click')">Actualizar</button>
+        <button class="btn btn-danger btn-sm" style="margin-left: 10px" (click)="modal.close('Save click')">Cancelar</button>
+    </div>
 </ng-template>

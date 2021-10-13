@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PaisModel } from 'src/app/models/pais.model';
+import { RegionModel } from 'src/app/models/region.model';
 import { PaisService } from 'src/app/services/pais/pais.service';
 import { RegionService } from 'src/app/services/region/region.service';
 
@@ -18,6 +19,7 @@ declare var jQuery: any;
 
 export class AgregarRegionesComponent implements OnInit {
 
+  @Input() regionRecibida: RegionModel;
 
   frmRegionRegistro: FormGroup;
   paisId: number=0;
@@ -92,6 +94,35 @@ export class AgregarRegionesComponent implements OnInit {
   paisSelectChange(event: any) {
     this.paisId = event.target.value;
   }
+
+
+  actualizar() {
+    //alert(this.frmPaisRegistro.controls['nombre'].value)
+    const name = this.frmRegionRegistro.controls['nombre'].value;
+    if (name != "") {
+      this.regionRecibida.nombre = name;
+      this.regionRecibida.descripcion = this.frmRegionRegistro.controls['descripcion'].value;
+      
+      this.regionService.UpdateRecord(this.regionRecibida).subscribe(result => {
+        //console.log(result);
+        //console.log(result.id);
+
+        if (result.id > 0) {
+          alert("Guardado con exito");
+          this.borrar();
+        } else {
+          alert("Error al Actualizar");
+          //this.estadoProceso = 0;
+          //this.modal.callAlert("Error al registrar", "ERROR");
+        }
+
+      });
+    }else{
+      alert("Error campo nombre vacio");
+    }
+
+  }
+
   ngOnInit(): void {
 
     this.cargarPaises();
@@ -101,14 +132,21 @@ export class AgregarRegionesComponent implements OnInit {
       $("#nombreRegion").keyup(function (evt) {
         if ($(this).val().length > 0) {
           $("#enviar").removeAttr("disabled",);
-          $("#reset").removeAttr("disabled",);
         } else {
           $("#enviar").attr("disabled", "disabled");
-          $("#reset").attr("disabled", "disabled");
         }
-
       });
     })
+
+    if (this.regionRecibida != null) {
+      this.frmRegionRegistro.controls['nombre'].patchValue(this.regionRecibida.nombre)
+      this.frmRegionRegistro.controls['descripcion'].patchValue(this.regionRecibida.descripcion);
+
+      $("#pais").attr("disabled", "disabled");
+      $("#enviar").hide();
+      $("#reset").hide();
+      $("#alerta").hide();
+    }
   }
 
 }

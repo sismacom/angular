@@ -31,7 +31,7 @@
                     <tr *ngFor="let departamento of (misDepartamentos | slice:desde:hasta) ">
                         <td class="text-center" scope="row" width="40px">
                             <ng-container *ngIf="departamento.id!=null">
-                                {{getDepartamento(departamento).id}}
+                                {{departamento.id}}
                             </ng-container>
                         </td>
                         <td class="text-center">
@@ -89,3 +89,24 @@
         </mat-paginator>
     </div>
 </div>
+
+
+
+
+<ng-template #modalMensaje let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">
+            <span>Modificacion</span>
+        </h4>
+        <!--<button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>-->
+    </div>
+    <div class="modal-body text-center"> 
+        <app-agregar-departamentos #actDepartamento [departRecibido]="departAct"></app-agregar-departamentos>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary btn-sm" (click)="actDepartamento.actualizar();modal.close('Save click')">Actualizar</button>
+        <button class="btn btn-danger btn-sm" style="margin-left: 10px" (click)="modal.close('Save click')">Cancelar</button>
+    </div>
+</ng-template>

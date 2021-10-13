@@ -1,23 +1,29 @@
-<div class="container ">
+<div class="container  ">
     <div class="text-center">
-        <h3 class="text-mutted">ADMINISTRACION DE DEPARTAMENTOS</h3>
+        <h3 class="text-mutted"><strong>ADMINISTRACION DE DEPARTAMENTOS</strong></h3>
     </div>
-    <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link " id="home-tab" data-bs-toggle="tab" data-bs-target="#sametab" type="button"
-                role="tab" aria-controls="home" aria-selected="false" routerLink="nuevodepartamento">Nuevo Departamento</button>
-        </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#sametab" type="button"
-                role="tab" aria-controls="profile" aria-selected="false" routerLink="buscardepartamento" >Buscar
-                Departamento</button>
-        </li>
-    </ul>
-    <div class="tab-content" id="myTabContent">
-        <div class="tab-pane show " style="border:1px solid #dee2e6" id="sametab" role="tabpanel"
-            aria-labelledby="home-tab">
-            <router-outlet></router-outlet>
-            <!--<app-agregar-regiones></app-agregar-regiones>-->
+    <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs justify-content-center" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link " id="home-tab" data-bs-toggle="tab" data-bs-target="#sametab" type="button"
+                        role="tab" aria-controls="home" aria-selected="false" routerLink="nuevodepartamento">
+                        Nuevo Departamento</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#sametab"
+                        type="button" role="tab" aria-controls="profile" aria-selected="false"
+                        routerLink="buscardepartamento">
+                        Buscar Departamento</button>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane show " style="border:1px solid #dee2e6" id="sametab" role="tabpanel"
+                aria-labelledby="home-tab">
+                <router-outlet></router-outlet>
+                <!--<app-agregar-regiones></app-agregar-regiones>-->
+            </div>
         </div>
     </div>
 </div>

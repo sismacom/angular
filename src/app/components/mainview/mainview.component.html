@@ -8,11 +8,13 @@
 <div class="container contenedorprincipal">
   <div class="row">
     <div class="col-3">
-      <div class="alert alert-info text-center">
-        <h4 class="accordion-header">
-          Usuario: {{nombreusuario}} 
-          <small class="text-muted"><button class="btn btn-outline-warning btn-sm btn-close " tooltip="Salir" (click)="salir()"></button></small>
-        </h4>
+      <div class="alert alert-secondary alert-dismissible text-center">
+        Usuario: {{nombreusuario}}
+        <button type="button" class=" btn btn-outline btn-sm btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="salir()">
+          <!--<span class="material-icons" style="cursor: pointer; font-size:18px">
+            logout
+          </span>-->
+        </button>
       </div>
       <app-menu></app-menu>
     </div>

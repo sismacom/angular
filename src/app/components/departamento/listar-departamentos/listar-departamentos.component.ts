@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Output, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DepartamentoModel } from 'src/app/models/departamento.model';
@@ -16,6 +16,9 @@ declare var jQuery: any;
 export class ListarDepartamentosComponent implements OnInit {
 
   @ViewChild("modalMensaje") modal: ElementRef;
+  
+  @Output() departAct:DepartamentoModel;
+
   misDepartamentos: Array<DepartamentoModel> = [];
   pageSize = 5;
   desde = 0;
@@ -58,9 +61,9 @@ export class ListarDepartamentosComponent implements OnInit {
 
   }
 
-  getDepartamento(valor): DepartamentoModel {
+  /*getDepartamento(valor): DepartamentoModel {
     return valor;
-  }
+  }*/
 
   deletePais(elpais: any) {
     this.departamentoService.DeleteItemRecord(elpais.id).subscribe(result => {
@@ -79,7 +82,8 @@ export class ListarDepartamentosComponent implements OnInit {
     this.hasta = this.desde + evt.pageSize;
   }
 
-  showUpdate(id: any) {
+  showUpdate(elDepar: any) {
+    this.departAct=elDepar;
     this.modalsv.open(this.modal);
   }
 

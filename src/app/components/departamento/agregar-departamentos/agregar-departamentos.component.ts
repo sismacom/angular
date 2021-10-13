@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { DepartamentoModel } from 'src/app/models/departamento.model';
 import { RegionModel } from 'src/app/models/region.model';
 import { DepartamentoService } from 'src/app/services/departamento/departamento.service';
 import { RegionService } from 'src/app/services/region/region.service';
@@ -15,6 +16,8 @@ declare var jQuery: any;
   styleUrls: ['./agregar-departamentos.component.scss']
 })
 export class AgregarDepartamentosComponent implements OnInit {
+
+  @Input() departRecibido: DepartamentoModel;
 
   frmDepartamentoRegistro: FormGroup;
   regionId: number = 0;
@@ -38,7 +41,7 @@ export class AgregarDepartamentosComponent implements OnInit {
     if (this.regionId != 0) {
       if (this.frmDepartamentoRegistro.valid) {
         //this.frmRegionRegistro.value.pais=this.pais;
-        this.departamentoService.InsertRecord(this.frmDepartamentoRegistro.value, this.regionId).subscribe(result => {
+        this.departamentoService.InsertNewRecord(this.frmDepartamentoRegistro.value, this.regionId).subscribe(result => {
           //console.log(result);
           //console.log(result.id);
 
@@ -60,7 +63,7 @@ export class AgregarDepartamentosComponent implements OnInit {
           }
         })
       }
-    }else{
+    } else {
       alert("Debe seleccionar una Region");
     }
 
@@ -84,6 +87,32 @@ export class AgregarDepartamentosComponent implements OnInit {
 
   }
 
+  actualizar(){
+    const name = this.frmDepartamentoRegistro.controls['nombre'].value;
+    if (name != "") {
+      this.departRecibido.nombre = name;
+      this.departRecibido.descripcion = this.frmDepartamentoRegistro.controls['descripcion'].value;
+      
+      this.departamentoService.UpdateRecord(this.departRecibido).subscribe(result => {
+        //console.log(result);
+        //console.log(result.id);
+
+        if (result.id > 0) {
+          alert("Guardado con exito");
+          this.borrar();
+        } else {
+          alert("Error al Actualizar");
+          //this.estadoProceso = 0;
+          //this.modal.callAlert("Error al registrar", "ERROR");
+        }
+
+      });
+    }else{
+      alert("Error campo nombre vacio");
+    }
+  }
+
+
   ngOnInit(): void {
 
     this.cargarRegiones();
@@ -93,14 +122,27 @@ export class AgregarDepartamentosComponent implements OnInit {
       $("#nombreDepartamento").keyup(function (evt) {
         if ($(this).val().length > 0) {
           $("#enviar").removeAttr("disabled",);
-          $("#reset").removeAttr("disabled",);
         } else {
           $("#enviar").attr("disabled", "disabled");
-          $("#reset").attr("disabled", "disabled");
         }
 
       });
     })
+
+    if (this.departRecibido != null) {
+      this.frmDepartamentoRegistro.controls['nombre'].patchValue(this.departRecibido.nombre)
+      this.frmDepartamentoRegistro.controls['descripcion'].patchValue(this.departRecibido.descripcion);
+
+      $("#region").attr("disabled", "disabled");
+      $("#enviar").hide();
+      $("#reset").hide();
+      $("#alerta").hide();
+    }
+
+
+
+
+
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Output, ViewChild } from '@angular/core';
 import { RegionService } from 'src/app/services/region/region.service';
 import { RegionModel } from 'src/app/models/region.model';
 import { PageEvent } from '@angular/material/paginator';
@@ -15,6 +15,8 @@ declare var jQuery: any;
 export class ListarRegionesComponent implements OnInit {
 
   @ViewChild("modalMensaje") modal: ElementRef;
+  @Output() regionAct:RegionModel;
+
   misRegiones: Array<RegionModel> = [];
   pageSize = 5;
   desde = 0;
@@ -71,7 +73,8 @@ export class ListarRegionesComponent implements OnInit {
     this.hasta = this.desde + evt.pageSize;
   }
 
-  showUpdate(id: any) {
+  showUpdate(laRegion: any) {
+    this.regionAct=laRegion;
     this.modalsv.open(this.modal);
   }
 

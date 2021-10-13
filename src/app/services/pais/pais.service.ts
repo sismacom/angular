@@ -18,8 +18,8 @@ export class PaisService {
     return this.http.post(`${this.URL_BASE}pais/nuevo`, data);
   }
 
-  UpdateRecord(data: any, id: any): Observable<any> {
-    return this.http.put(`${this.URL_BASE}pais/actualizar/${id}`, data);
+  UpdateRecord(data: any): Observable<any> {
+    return this.http.put(`${this.URL_BASE}pais/actualizar`, data);
   }
 
   DeleteItemRecord(id: any): Observable<any> {
